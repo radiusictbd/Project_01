@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Hello, World — A Little Spark</title>
+  <style>
+    :root { color-scheme: dark; --ink: #f6f4ff; --muted: #aaa9c2; --pink: #ff83c8; --blue: #7bdcff; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100svh; display: grid; place-items: center; overflow: hidden;
+      color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(ellipse at 50% 115%, #30205f 0, transparent 55%),
+                  radial-gradient(ellipse at 12% 12%, #162d55 0, transparent 40%), #0b1020;
+    }
+    .stars, .stars::before, .stars::after { position: absolute; inset: 0; pointer-events: none; content: ""; }
+    .stars { opacity: .45; background-image: radial-gradient(1px 1px at 15% 24%, #fff 99%, transparent), radial-gradient(1px 1px at 75% 18%, #fff 99%, transparent), radial-gradient(1.5px 1.5px at 83% 68%, #fff 99%, transparent), radial-gradient(1px 1px at 28% 79%, #fff 99%, transparent), radial-gradient(1px 1px at 58% 43%, #fff 99%, transparent), radial-gradient(1px 1px at 92% 35%, #fff 99%, transparent); background-size: 310px 260px; animation: twinkle 5s ease-in-out infinite alternate; }
+    .stars::before { opacity: .5; transform: translate(80px, 35px); background: radial-gradient(1px 1px at 20% 40%, #fff 99%, transparent), radial-gradient(1px 1px at 70% 80%, #fff 99%, transparent); background-size: 230px 190px; }
+    main { position: relative; z-index: 1; width: min(880px, calc(100% - 40px)); text-align: center; padding: 70px 28px; }
+    .badge { display: inline-flex; align-items: center; gap: 9px; padding: 9px 14px; border: 1px solid #ffffff20; border-radius: 99px; color: #d1d1e4; background: #ffffff08; font-size: 12px; letter-spacing: .13em; text-transform: uppercase; backdrop-filter: blur(10px); }
+    .badge span { width: 7px; height: 7px; border-radius: 50%; background: #79f2be; box-shadow: 0 0 12px #79f2be; }
+    h1 { margin: 30px 0 18px; font-size: clamp(3.4rem, 11vw, 7.7rem); line-height: .94; letter-spacing: -.075em; font-weight: 780; }
+    h1 .hello { display: block; color: var(--ink); }
+    h1 .world { display: block; padding-bottom: .1em; background: linear-gradient(100deg, var(--blue) 8%, #b7a1ff 49%, var(--pink) 92%); color: transparent; background-clip: text; -webkit-background-clip: text; }
+    p { margin: 24px auto 0; max-width: 470px; color: var(--muted); font-size: clamp(1rem, 2.5vw, 1.18rem); line-height: 1.7; }
+    .actions { margin-top: 34px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    button { border: 0; border-radius: 99px; padding: 13px 20px; color: #101222; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; background: linear-gradient(110deg, #a8eaff, #d0b2ff 55%, #ffabd9); box-shadow: 0 8px 35px #a78bfa38; transition: transform .2s, box-shadow .2s; }
+    button:hover { transform: translateY(-3px); box-shadow: 0 12px 42px #d4a6ff55; }
+    button:focus-visible { outline: 2px solid white; outline-offset: 4px; }
+    .note { margin-top: 66px; color: #77778f; font-size: 11px; letter-spacing: .19em; text-transform: uppercase; }
+    .orb { position: absolute; z-index: -1; width: min(72vw, 540px); aspect-ratio: 1; top: 50%; left: 50%; border: 1px solid #ffffff0b; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 100px #8e68ff0a, inset 0 0 100px #8e68ff08; }
+    .orb::before, .orb::after { content: ""; position: absolute; border: 1px solid #ffffff08; border-radius: 50%; inset: 9%; }
+    .orb::after { inset: 20%; }
+    @keyframes twinkle { from { opacity: .25; } to { opacity: .58; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <main>
+    <div class="orb" aria-hidden="true"></div>
+    <div class="badge"><span aria-hidden="true"></span> A tiny beginning</div>
+    <h1><span class="hello">Hello,</span><span class="world">World.</span></h1>
+    <p>One small line of code, one whole new possibility. Here’s to wherever you go from here.</p>
+    <div class="actions"><button type="button" id="spark">Make a little magic ✦</button></div>
+    <div class="note">Made with curiosity&nbsp; · &nbsp;HTML + CSS</div>
+  </main>
+  <script>
+    const button = document.querySelector('#spark');
+    button.addEventListener('click', () => {
+      const colors = ['#7bdcff', '#ff83c8', '#b7a1ff', '#79f2be', '#ffd47b'];
+      for (let i = 0; i < 28; i++) {
+        const dot = document.createElement('i');
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 45 + Math.random() * 125;
+        dot.style.cssText = `position:fixed;z-index:5;left:${innerWidth / 2}px;top:${innerHeight / 2 + 8}px;width:${4 + Math.random() * 6}px;height:${4 + Math.random() * 6}px;border-radius:50%;background:${colors[i % colors.length]};box-shadow:0 0 12px currentColor;pointer-events:none;transition:transform 850ms cubic-bezier(.15,.75,.25,1),opacity 850ms ease;`;
+        document.body.append(dot);
+        requestAnimationFrame(() => { dot.style.transform = `translate(${Math.cos(angle) * distance}px,${Math.sin(angle) * distance}px)`; dot.style.opacity = '0'; });
+        setTimeout(() => dot.remove(), 900);
+      }
+    });
+  </script>
+</body>
+</html>
